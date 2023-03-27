@@ -1,0 +1,8 @@
+checkpoints/**
+datasets/**
+GAN_Checkpoints/**
+PLG_MI_Inversion/**
+PLG_MI_Results/**
+__pycache__/
+celeba_private_feats/**
+reclassified_public_data/
