@@ -1,8 +1,7 @@
 # NCKH 2023 
 
 Code for NCKH 2023 
-Based on the paper **<a href="https://arxiv.org/abs/2302.09814">Pseudo Label-Guided Model Inversion Attack via Conditional Generative Adversarial Network</a> (AAAI
-2023)**. 
+## Based on the paper **<a href="https://arxiv.org/abs/2302.09814">Pseudo Label-Guided Model Inversion Attack via Conditional Generative Adversarial Network</a> (AAAI 2023)**. 
 
 ![framework](LPG-MI/imgs/framework.jpg)
 
