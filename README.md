@@ -164,4 +164,4 @@ Or you can build your own Deep Learning model with torch nn module .
 * **Extra care needed for sampling.** Taking virtual step with fixed virtual batch size is not compatible with Poisson sampling. [Opacus] provides `BatchMemoryManager` to feature this [sampling issue](https://github.com/pytorch/opacus/blob/main/Migration_Guide.md#if-youre-using-virtual-steps) and our mixed ghost clipping can be merged
 
 ## Acknowledgement
-This code is largely based on https://github.com/lxuechen/private-transformers (v0.1.0) and https://github.com/pytorch/opacus (v0.15) .
+This code is largely based on https://github.com/lxuechen/private-transformers (v0.1.0) and https://github.com/pytorch/opacus (v1.3) .
