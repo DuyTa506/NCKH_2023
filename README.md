@@ -47,7 +47,7 @@ This code contains 2 scenarios :
     └── celeba_private_domain
     ````
 
-#Model Inversion :
+## Model Inversion :
 ### Models
 
 - You can train target models following [KED-MI](https://github.com/SCccc21/Knowledge-Enriched-DMI/) or contact to duyfaker01@gmail.com for more details
@@ -97,11 +97,11 @@ python reconstruct.py \
 --save_dir=PLG_MI_Inversion
 ```
 
-# Examples of reconstructed face images
+### Examples of reconstructed face images
 
 ![examples](LPG-MI/imgs/examples.jpg)
 
-#Make private with diffirential privacy methods :
+## Make private with diffirential privacy methods :
 This Pytorch codebase implements efficient training of differentially private (DP) vision neural networks (CNN, including convolutional Vision Transformers), using [mixed ghost per-sample gradient clipping].
 
 <p align="center">
@@ -119,15 +119,11 @@ However, they are not suitable for DP training of large CNNs, because they are e
 
 This codebase implements a new technique --**the mixed ghost clipping**-- for the convolutional layers, that substantially reduces the space and time complexity of DP deep learning.
 
-##Highlights
+## Highlights
 * We implement a mixed ghost clipping technique for the Conv1d/Conv2d/Conv3d layers, that trains DP CNNs almost as light as (with 0.1%-10% memory overhead) the regular training. This allows us to train 18 times larger batch size on VGG19 and CIFAR10 than Opacus, as well as to train efficiently on ImageNet (224X224) or larger images, which easily cause out of memory error with private-transformers.
 * Larger batch size can improve the throughput of mixed ghost clipping to be 3 times faster than existing DP training methods. On all models we tested, the slowdown is at most 2 times to the regular training.
 * We support general optimizers and clipping functions. Loading vision models from codebases such as [timm](https://github.com/rwightman/pytorch-image-models) and [torchvision](https://pytorch.org/vision/stable/models.html), our method can privately train VGG, ResNet, Wide ResNet, ResNeXt, etc. with a few additional lines of code. 
-* We demonstrate DP training of convolutional Vision Transformers (up to 300 million parameters, again 10% memory overhead and less than 200% slowdonw than non-private training). We improve from previous SOTA 67.4% accuracy to **83.0% accuracy at eps=1 on CIFAR100**, and to **96.7% accuracy at eps=1 on CIFAR10**.
-
-<p align="center">
-  <img width="750" height="300" src="[private_vision/assets/cifar100_vit.png">
-</p>
+* We demonstrate DP training of convolutional Vision Transformers (up to 300 million parameters, again 10% memory overhead and less than 200% slowdonw than non-private training). We improve from previous SOTA 67.4% **96.7% accuracy at eps=1 on CIFAR10**.
 
 ## :beers: Examples
 To DP training models on CIFAR10 and CIFAR100, one can run
