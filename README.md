@@ -1,6 +1,6 @@
 # NCKH 2023 
 
-Code for the paper NCKH 2023 
+Code for NCKH 2023 
 
 
 ![framework](LPG-MI/imgs/framework.jpg)
@@ -105,7 +105,7 @@ python reconstruct.py \
 This Pytorch codebase implements efficient training of differentially private (DP) vision neural networks (CNN, including convolutional Vision Transformers), using [mixed ghost per-sample gradient clipping].
 
 <p align="center">
-  <img width="600" height="350" src="./assets/cifar10_memory_speed.png">
+  <img width="600" height="350" src="private_vision/assets/cifar10_memory_speed.png">
 </p>
 
 ## What is this?
