@@ -2,7 +2,7 @@
 
 The code is adapted from: https://github.com/SCccc21/Knowledge-Enriched-DMI
 
-The checkpoints can be found at: https://drive.google.com/drive/folders/1qDvl7i6_U7xoaduUbeEzTSuYXWpxvvXt?usp=sharing
+The checkpoints will be shared later .
 
 ## [GMI](https://arxiv.org/abs/1911.07135)
 
