@@ -3,7 +3,7 @@
 Code for the paper NCKH 2023 
 
 
-![framework](LPG-MI/imgsimgs/framework.jpg)
+![framework](LPG-MI/imgs/framework.jpg)
 
 # Requirement
 
@@ -99,7 +99,7 @@ python reconstruct.py \
 
 # Examples of reconstructed face images
 
-![examples](imgs/examples.jpg)
+![examples](LPG-MI/imgs/examples.jpg)
 
 #Make private with diffirential privacy methods :
 This Pytorch codebase implements efficient training of differentially private (DP) vision neural networks (CNN, including convolutional Vision Transformers), using [mixed ghost per-sample gradient clipping].
@@ -108,25 +108,25 @@ This Pytorch codebase implements efficient training of differentially private (D
   <img width="600" height="350" src="./assets/cifar10_memory_speed.png">
 </p>
 
-## ❓ What is this?
+## What is this?
 There are a few DP libraries that change the regular non-private training of neural networks to a privacy-preserving one. Examples include [Opacus](https://github.com/pytorch/opacus/blob/main/Migration_Guide.md#if-youre-using-virtual-steps), [FastGradClip](https://github.com/ppmlguy/fastgradclip), [private-transformers](https://github.com/lxuechen/private-transformers), and [tensorflow-privacy](https://github.com/tensorflow/privacy).
 
 However, they are not suitable for DP training of large CNNs, because they are either not generalizable or computationally inefficient. E.g. causing >20 times memory burden or >5 times slowdown than the regular training.
 
 <p align="center">
-  <img width="750" height="250" src="./assets/cifar10_stress_tests.png">
+  <img width="750" height="250" src="private_vision/assets/cifar10_stress_tests.png">
 </p>
 
 This codebase implements a new technique --**the mixed ghost clipping**-- for the convolutional layers, that substantially reduces the space and time complexity of DP deep learning.
 
-## 🔥 Highlights
+##Highlights
 * We implement a mixed ghost clipping technique for the Conv1d/Conv2d/Conv3d layers, that trains DP CNNs almost as light as (with 0.1%-10% memory overhead) the regular training. This allows us to train 18 times larger batch size on VGG19 and CIFAR10 than Opacus, as well as to train efficiently on ImageNet (224X224) or larger images, which easily cause out of memory error with private-transformers.
 * Larger batch size can improve the throughput of mixed ghost clipping to be 3 times faster than existing DP training methods. On all models we tested, the slowdown is at most 2 times to the regular training.
 * We support general optimizers and clipping functions. Loading vision models from codebases such as [timm](https://github.com/rwightman/pytorch-image-models) and [torchvision](https://pytorch.org/vision/stable/models.html), our method can privately train VGG, ResNet, Wide ResNet, ResNeXt, etc. with a few additional lines of code. 
 * We demonstrate DP training of convolutional Vision Transformers (up to 300 million parameters, again 10% memory overhead and less than 200% slowdonw than non-private training). We improve from previous SOTA 67.4% accuracy to **83.0% accuracy at eps=1 on CIFAR100**, and to **96.7% accuracy at eps=1 on CIFAR10**.
 
 <p align="center">
-  <img width="750" height="300" src="./assets/cifar100_vit.png">
+  <img width="750" height="300" src="[private_vision/assets/cifar100_vit.png">
 </p>
 
 ## :beers: Examples
@@ -159,9 +159,10 @@ resnet18, resnet34, resnet50, resnet101, resnet152, resnext50_32x4d, res2net50_1
 vgg11, vgg11_bn, vgg13, vgg16, vgg19, visformer_small, vit_base_patch16_224, vit_base_patch32_224, vit_large_patch16_224, vit_small_patch16_224, vit_tiny_patch16_224, volo_d1_224, wide_resnet50_2, wide_resnet101_2, xception, xcit_large_24_p16_224, xcit_medium_24_p16_224, xcit_small_24_p16_224, xcit_tiny_24_p16_224
 ```
 We also support models in `torchvision` and other vision libraries, e.g. `densenet121, densnet161, densenet201`.
-Or you can build your own Deep Learning model .
 
-<!--
+Or you can build your own Deep Learning model with torch nn module .
+
+
 # :warning: Caution
 * **Batch normalization does not satisfy DP.** This is because the mean and variance of batch normalization is computed from data without privatization. To train DP networks, replace batch normalization with group/instance/layer normalization. [Opacus (>v1.0)](https://github.com/pytorch/opacus/blob/main/tutorials/guide_to_module_validator.ipynb) provides an easy fixer for this replacement via `opacus.validators.ModuleValidator.fix`, but you can also change the normalization layer manually. 
 * **Extra care needed for sampling.** Taking virtual step with fixed virtual batch size is not compatible with Poisson sampling. [Opacus] provides `BatchMemoryManager` to feature this [sampling issue](https://github.com/pytorch/opacus/blob/main/Migration_Guide.md#if-youre-using-virtual-steps) and our mixed ghost clipping can be merged
