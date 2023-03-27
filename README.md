@@ -47,9 +47,9 @@ This code contains 2 scenarios :
     └── celeba_private_domain
     ````
 
-## Model Inversion :
+## Model Inversion (LPG-MI) :
 ### Models
-
+ 
 - You can train target models following [KED-MI](https://github.com/SCccc21/Knowledge-Enriched-DMI/) or contact to duyfaker01@gmail.com for more details
 
 - To calculate the KNN_dist, we get the features of private data on the evaluation model in advance. You can download
@@ -101,7 +101,7 @@ python reconstruct.py \
 
 ![examples](LPG-MI/imgs/examples.jpg)
 
-## Make private with diffirential privacy methods :
+## Make private with diffirential privacy methods (private_vision) :
 This Pytorch codebase implements efficient training of differentially private (DP) vision neural networks (CNN, including convolutional Vision Transformers), using [mixed ghost per-sample gradient clipping].
 
 <p align="center">
