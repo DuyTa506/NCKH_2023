@@ -3,7 +3,7 @@
 Code for the paper NCKH 2023 
 
 
-![framework](imgs/framework.jpg)
+![framework](LPG-MI/imgsimgs/framework.jpg)
 
 # Requirement
 
