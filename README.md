@@ -12,7 +12,7 @@ Install the environment as follows:
 ```bash
 # create conda environment
 conda create -n NCKH_2023  python=3.9
-conda activate PLG_MI
+conda activate NCKH_2023 
 # install pytorch 
 conda install pytorch==1.10.0 torchvision==0.10.0 cudatoolkit=11.3 -c pytorch -c conda-forge
 # install other dependencies
@@ -47,7 +47,7 @@ This code contains 2 scenarios :
     └── celeba_private_domain
     ````
 
-## Model Inversion (LPG-MI) :
+## Model Inversion (LPG-MI folder) :
 ### Models
  
 - You can train target models following [KED-MI](https://github.com/SCccc21/Knowledge-Enriched-DMI/) or contact to duyfaker01@gmail.com for more details
@@ -101,7 +101,7 @@ python reconstruct.py \
 
 ![examples](LPG-MI/imgs/examples.jpg)
 
-## Make private with diffirential privacy methods (private_vision) :
+## Make private with diffirential privacy methods (private_vision folder) :
 This Pytorch codebase implements efficient training of differentially private (DP) vision neural networks (CNN, including convolutional Vision Transformers), using [mixed ghost per-sample gradient clipping].
 
 <p align="center">
