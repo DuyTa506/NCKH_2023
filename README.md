@@ -19,6 +19,7 @@ conda install pytorch==1.10.0 torchvision==0.10.0 cudatoolkit=11.3 -c pytorch -c
 pip install -r requirements.txt
 ```
 
+# All the experiments was done on local feature : NVDIA RTX 1650 TI 4GB and Google Colaboratory with Tesla V4 15GB
 # Preparation
 
 This code contains 2 scenarios :
