@@ -14,7 +14,7 @@ Install the environment as follows:
 conda create -n NCKH_2023  python=3.9
 conda activate NCKH_2023 
 # install pytorch 
-conda install pytorch==1.10.0 torchvision==0.10.0 cudatoolkit=11.3 -c pytorch -c conda-forge
+conda install pytorch==1.12.1 torchvision==0.13.1 cudatoolkit=11.3 -c pytorch -c conda-forge
 # install other dependencies
 pip install -r requirements.txt
 ```
