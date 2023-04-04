@@ -127,7 +127,7 @@ This codebase implements a new technique --**the mixed ghost clipping**-- for th
 * We implement a mixed ghost clipping technique for the Conv1d/Conv2d/Conv3d layers, that trains DP CNNs almost as light as (with 0.1%-10% memory overhead) the regular training. This allows us to train 18 times larger batch size on VGG19 and CIFAR10 than Opacus, as well as to train efficiently on ImageNet (224X224) or larger images, which easily cause out of memory error with private-transformers.
 * Larger batch size can improve the throughput of mixed ghost clipping to be 3 times faster than existing DP training methods. On all models we tested, the slowdown is at most 2 times to the regular training.
 * We support general optimizers and clipping functions. Loading vision models from codebases such as [timm](https://github.com/rwightman/pytorch-image-models) and [torchvision](https://pytorch.org/vision/stable/models.html), our method can privately train VGG, ResNet, Wide ResNet, ResNeXt, etc. with a few additional lines of code. 
-* We demonstrate DP training of convolutional Vision Transformers (up to 300 million parameters, again 10% memory overhead and less than 200% slowdonw than non-private training). We improve from previous SOTA 67.4% **96.7% accuracy at eps=1 on CIFAR10**.
+* We demonstrate DP training of convolutional Vision Transformers (up to 100 million parameters, again 10% memory overhead and less than 200% slowdonw than non-private training). We improve from previous SOTA 74.8% **96.5% accuracy at eps=1 on CIFAR10**.
 
 ## :beers: Examples
 To DP training models on CIFAR10 and CIFAR100, one can run
