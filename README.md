@@ -105,13 +105,17 @@ python reconstruct.py \
 This Pytorch codebase implements efficient training of differentially private (DP) vision neural networks (CNN, including convolutional Vision Transformers), using [mixed ghost per-sample gradient clipping].
 
 <p align="center">
-  <img width="600" height="350" src="private_vision/assets/cifar10_memory_speed.png">
+  <img width="600" height="350" src="private_vision/assets/accuracy.jpg">
 </p>
 
 ## What is this?
 There are a few DP libraries that change the regular non-private training of neural networks to a privacy-preserving one. Examples include [Opacus](https://github.com/pytorch/opacus/blob/main/Migration_Guide.md#if-youre-using-virtual-steps), [FastGradClip](https://github.com/ppmlguy/fastgradclip), [private-transformers](https://github.com/lxuechen/private-transformers), and [tensorflow-privacy](https://github.com/tensorflow/privacy).
 
-However, they are not suitable for DP training of large CNNs, because they are either not generalizable or computationally inefficient. E.g. causing >20 times memory burden or >5 times slowdown than the regular training.
+However, they are not suitable for DP training of large CNNs, because they are either not generalizable or computationally inefficient. E.g. causing >20 times memory burden or >5 times slowdown than the regular training. And of course , the performance is shown below :
+
+<p align="center">
+  <img width="750" height="250" src="private_vision/assets/expirements.jpg">
+</p>
 
 <p align="center">
   <img width="750" height="250" src="private_vision/assets/cifar10_stress_tests.png">

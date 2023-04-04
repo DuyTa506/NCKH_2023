@@ -45,8 +45,10 @@ def get_logger():
 
 
 def inversion(args, G, T, E, iden, itr, lr=2e-2, iter_times=1500, num_seeds=5):
-    save_img_dir = os.path.join(args.save_dir, 'all_imgs')
-    success_dir = os.path.join(args.save_dir, 'success_imgs')
+    total_time = 0
+    path = os.path.join(args.save_dir, args.model)
+    save_img_dir = os.path.join(path, 'all_imgs')
+    success_dir = os.path.join(path, 'success_imgs')
     os.makedirs(save_img_dir, exist_ok=True)
     os.makedirs(success_dir, exist_ok=True)
 
@@ -114,13 +116,13 @@ def inversion(args, G, T, E, iden, itr, lr=2e-2, iter_times=1500, num_seeds=5):
                     eval_iden = torch.argmax(eval_prob, dim=1).view(-1)
                     acc = iden.eq(eval_iden.long()).sum().item() * 1.0 / bs
                     print("Iteration:{}\tInv Loss:{:.2f}\tAttack Acc:{:.2f}".format(i + 1, inv_loss_val, acc))
-
+        
         with torch.no_grad():
             fake = G(z, iden)
             score = T(fake)[-1]
             eval_prob = E(augmentation.Resize((112, 112))(fake))[-1]
             eval_iden = torch.argmax(eval_prob, dim=1).view(-1)
-
+            
             cnt, cnt5 = 0, 0
             for i in range(bs):
                 gt = iden[i].item()
@@ -146,19 +148,19 @@ def inversion(args, G, T, E, iden, itr, lr=2e-2, iter_times=1500, num_seeds=5):
                 _, top5_idx = torch.topk(eval_prob[i], 5)
                 if gt in top5_idx:
                     cnt5 += 1
-
+            
             interval = time.time() - tf
             print("Time:{:.2f}\tAcc:{:.2f}\t".format(interval, cnt * 1.0 / bs))
             res.append(cnt * 1.0 / bs)
             res5.append(cnt5 * 1.0 / bs)
             torch.cuda.empty_cache()
-
+            total_time +=interval
     acc, acc_5 = statistics.mean(res), statistics.mean(res5)
     acc_var = statistics.variance(res)
     acc_var5 = statistics.variance(res5)
     print("Acc:{:.2f}\tAcc_5:{:.2f}\tAcc_var:{:.4f}\tAcc_var5:{:.4f}".format(acc, acc_5, acc_var, acc_var5))
 
-    return acc, acc_5, acc_var, acc_var5
+    return acc, acc_5, acc_var, acc_var5, total_time
 
 
 if __name__ == "__main__":
@@ -197,7 +199,7 @@ if __name__ == "__main__":
         num_classes=1000, distribution=args.gen_distribution
     )
     gen_ckpt_path = args.path_G
-    gen_ckpt = torch.load(gen_ckpt_path)['state_dict']
+    gen_ckpt = torch.load(gen_ckpt_path)['model']
     G.load_state_dict(gen_ckpt)
     G = G.cuda()
 
@@ -233,26 +235,25 @@ if __name__ == "__main__":
         iden = torch.from_numpy(np.arange(60))
 
         # evaluate on the first 300 identities only
-        for idx in range(5):
+        for idx in range(1):
             print("--------------------- Attack batch [%s]------------------------------" % idx)
             # reconstructed private images
-            acc, acc5, var, var5 = inversion(args, G, T, E, iden, itr=i, lr=args.lr, iter_times=args.iter_times,
+            acc, acc5, var, var5, tol_time = inversion(args, G, T, E, iden, itr=i, lr=args.lr, iter_times=args.iter_times,
                                              num_seeds=5)
 
             iden = iden + 60
-            aver_acc += acc / 5
-            aver_acc5 += acc5 / 5
-            aver_var += var / 5
-            aver_var5 += var5 / 5
+            aver_acc += acc / 1
+            aver_acc5 += acc5 / 1
+            aver_var += var / 1
+            aver_var5 += var5 / 1
 
     print("Average Acc:{:.2f}\tAverage Acc5:{:.2f}\tAverage Acc_var:{:.4f}\tAverage Acc_var5:{:.4f}".format(aver_acc,
                                                                                                             aver_acc5,
                                                                                                             aver_var,
                                                                                                             aver_var5))
-    Acc = {'Average Acc': '{:.2f}'.format(aver_acc) , 
-           'Average Acc5' : '{:.2f}'.format(aver_acc5) , 
-           'Average Acc_var' : '{:.2f}'.format(aver_var), 
-           'Average Acc_var5' : '{:.2f}'.format(aver_var5)}
+    Acc = {'Time for reconstruction ': tol_time,
+           'Average Acc': '{:.2f}'.format(aver_acc) , 
+           'Average Acc5' : '{:.2f}'.format(aver_acc5)}
            
 
     
@@ -264,15 +265,16 @@ if __name__ == "__main__":
     print("=> Calculate the FID.")
     fid = calc_fid(recovery_img_path=os.path.join(path, "success_imgs"),
                    private_img_path="datasets/celeba_private_domain",
-                   batch_size=200)
+                   batch_size=64)
     print("FID %.2f" % fid)
 
     
     with open(os.path.join(path, 'result.json'), 'w') as f:
         json.dump(args.__dict__, f, indent=3)
+        json.dump({},f,indent=3)
         json.dump(Acc, f, indent=3)
-        json.dump({'KNN_dist' : '{.2f}'.format(knn_dist),
-                   'FID' : '{.2f}'.format(fid)} , f, indent =3)
+        json.dump({'KNN_dist' : '{:.2f}'.format(knn_dist),
+                   'FID' : '{:.2f}'.format(fid)} , f, indent =3)
 
     print('Saved result')
 

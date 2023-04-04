@@ -59,7 +59,7 @@ def get_args():
     parser.add_argument('--data_root', type=str, help='path to dataset root directory.')
     parser.add_argument('--data_name', type=str, help='celeba | ffhq | facescrub')
     parser.add_argument('--target_model', type=str, help='VGG16 | IR152 | FaceNet64')
-    parser.add_argument('--private_data_root', type=str, default='datasets/celeba_private_domain',
+    parser.add_argument('--private_data_root', type=str, default='./datasets/celeba_private_domain',
                         help='path to private dataset root directory. default: CelebA')
     parser.add_argument('--batch_size', '-B', type=int, default=64,
                         help='mini-batch size of training data. default: 64')
