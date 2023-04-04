@@ -40,9 +40,8 @@ This code contains 2 scenarios :
     ```
     datasets
     ├── celeba
-    │   └── img_align_celeba
-    ├── facescrub
-    │   └── faceScrub
+    |   └── img_align_celeba
+    |
     ├── ffhq
     │   └── thumbnails128x128
     └── celeba_private_domain
